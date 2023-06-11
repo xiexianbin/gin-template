@@ -1,0 +1,11 @@
+### User Register
+
+POST http://localhost:8080/v1/user/register
+Content-Type: application/json
+
+{
+    "username": "xianbin",
+    "email": "xiexianbin.cn",
+    "password": "123678"
+}
+
