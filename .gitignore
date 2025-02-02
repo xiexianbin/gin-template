@@ -13,3 +13,12 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+.DS_Store
+.history/
+.lh
+.idea/
+*.log
+bin/
+testdata/
+tmp/
+vendor/

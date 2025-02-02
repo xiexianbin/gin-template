@@ -1,0 +1,225 @@
+basePath: /api
+definitions:
+  app.Response:
+    properties:
+      code:
+        $ref: '#/definitions/code.Code'
+      data: {}
+      message:
+        type: string
+      reason:
+        type: string
+      request_id:
+        type: string
+    type: object
+  code.Code:
+    enum:
+    - 100200
+    - 100201
+    - 100202
+    - 100203
+    - 100204
+    - 100405
+    - 100406
+    - 100407
+    - 100408
+    - 100409
+    - 100410
+    - 100411
+    - 100412
+    - 100413
+    - 100414
+    - 100415
+    type: integer
+    x-enum-comments:
+      CodeNotFound: "100404"
+    x-enum-varnames:
+    - CodeOK
+    - CodeCreated
+    - CodeAccepted
+    - CodeNonAuthoritativeInfo
+    - CodeNoContent
+    - CodeBadRequest
+    - CodeUnauthorized
+    - CodePaymentRequired
+    - CodeForbidden
+    - CodeNotFound
+    - CodeMethodNotAllowed
+    - CodeNotAcceptable
+    - CodeProxyAuthRequired
+    - CodeRequestTimeout
+    - CodeConflict
+    - CodeUnKnown
+  v0.Foo:
+    properties:
+      email:
+        example: account email
+        type: string
+      name:
+        example: account name
+        type: string
+    type: object
+host: 127.0.0.1:1323
+info:
+  contact:
+    email: me@xiexianbin.cn
+    name: API Support
+    url: http://www.xiexianbin.cn
+  description: This is a sample server go-echo demo server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: https://github.com/xiexianbin/gin-template
+  title: go-echo-demo Swagger API
+  version: "1.0"
+paths:
+  /v0/foo:
+    get:
+      consumes:
+      - application/json
+      description: https://echo.labstack.com/docs/quick-start#query-parameters
+      parameters:
+      - description: Foo Id
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+        "400":
+          description: We need ID!!
+          schema:
+            $ref: '#/definitions/app.Response'
+        "404":
+          description: Can not find ID
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: Read foo by query id
+      tags:
+      - foo
+    post:
+      consumes:
+      - multipart/form-data
+      description: |-
+        https://echo.labstack.com/docs/quick-start#form-applicationx-www-form-urlencoded
+        https://echo.labstack.com/docs/quick-start#form-multipartform-data
+        curl -F "name=xiexianbin" -F "avatar=@/path/to/your/avatar.png" http://localhost:1323/foo
+      parameters:
+      - description: Foo Id
+        in: formData
+        name: name
+        required: true
+        type: string
+      - description: Foo Id
+        in: formData
+        name: avatar
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+        "400":
+          description: We need ID!!
+          schema:
+            $ref: '#/definitions/app.Response'
+        "404":
+          description: Can not find ID
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: save foo by application/form-data
+      tags:
+      - foo
+  /v0/foo/{id}:
+    get:
+      consumes:
+      - application/json
+      description: '...'
+      parameters:
+      - description: Foo Id
+        in: query
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/app.Response'
+        "400":
+          description: We need ID!!
+          schema:
+            $ref: '#/definitions/app.Response'
+        "404":
+          description: Can not find ID
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: delete foo by path id
+      tags:
+      - foo
+  /v0/foo2:
+    post:
+      consumes:
+      - application/json
+      description: '...'
+      parameters:
+      - description: Foo Data
+        in: body
+        name: foo
+        required: true
+        schema:
+          $ref: '#/definitions/v0.Foo'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            type: string
+        "400":
+          description: We need ID!!
+          schema:
+            $ref: '#/definitions/app.Response'
+        "404":
+          description: Can not find ID
+          schema:
+            $ref: '#/definitions/app.Response'
+      summary: save foo by json
+      tags:
+      - foo
+  /v0/helloworld:
+    get:
+      consumes:
+      - application/json
+      description: say helloworld
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Helloworld
+          schema:
+            allOf:
+            - $ref: '#/definitions/app.Response'
+            - properties:
+                data:
+                  type: string
+              type: object
+      summary: helloworld example
+      tags:
+      - foo
+swagger: "2.0"

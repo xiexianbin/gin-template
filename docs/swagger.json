@@ -1,0 +1,327 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample server go-echo demo server.",
+        "title": "go-echo-demo Swagger API",
+        "termsOfService": "https://github.com/xiexianbin/gin-template",
+        "contact": {
+            "name": "API Support",
+            "url": "http://www.xiexianbin.cn",
+            "email": "me@xiexianbin.cn"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "127.0.0.1:1323",
+    "basePath": "/api",
+    "paths": {
+        "/v0/foo": {
+            "get": {
+                "description": "https://echo.labstack.com/docs/quick-start#query-parameters",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "foo"
+                ],
+                "summary": "Read foo by query id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Foo Id",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "We need ID!!",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Can not find ID",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "https://echo.labstack.com/docs/quick-start#form-applicationx-www-form-urlencoded\nhttps://echo.labstack.com/docs/quick-start#form-multipartform-data\ncurl -F \"name=xiexianbin\" -F \"avatar=@/path/to/your/avatar.png\" http://localhost:1323/foo",
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "foo"
+                ],
+                "summary": "save foo by application/form-data",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Foo Id",
+                        "name": "name",
+                        "in": "formData",
+                        "required": true
+                    },
+                    {
+                        "type": "file",
+                        "description": "Foo Id",
+                        "name": "avatar",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/app.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    "400": {
+                        "description": "We need ID!!",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Can not find ID",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/foo/{id}": {
+            "get": {
+                "description": "...",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "foo"
+                ],
+                "summary": "delete foo by path id",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Foo Id",
+                        "name": "id",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    },
+                    "400": {
+                        "description": "We need ID!!",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Can not find ID",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/foo2": {
+            "post": {
+                "description": "...",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "foo"
+                ],
+                "summary": "save foo by json",
+                "parameters": [
+                    {
+                        "description": "Foo Data",
+                        "name": "foo",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/v0.Foo"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "400": {
+                        "description": "We need ID!!",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    },
+                    "404": {
+                        "description": "Can not find ID",
+                        "schema": {
+                            "$ref": "#/definitions/app.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/v0/helloworld": {
+            "get": {
+                "description": "say helloworld",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "foo"
+                ],
+                "summary": "helloworld example",
+                "responses": {
+                    "200": {
+                        "description": "Helloworld",
+                        "schema": {
+                            "allOf": [
+                                {
+                                    "$ref": "#/definitions/app.Response"
+                                },
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "app.Response": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "$ref": "#/definitions/code.Code"
+                },
+                "data": {},
+                "message": {
+                    "type": "string"
+                },
+                "reason": {
+                    "type": "string"
+                },
+                "request_id": {
+                    "type": "string"
+                }
+            }
+        },
+        "code.Code": {
+            "type": "integer",
+            "enum": [
+                100200,
+                100201,
+                100202,
+                100203,
+                100204,
+                100405,
+                100406,
+                100407,
+                100408,
+                100409,
+                100410,
+                100411,
+                100412,
+                100413,
+                100414,
+                100415
+            ],
+            "x-enum-comments": {
+                "CodeNotFound": "100404"
+            },
+            "x-enum-varnames": [
+                "CodeOK",
+                "CodeCreated",
+                "CodeAccepted",
+                "CodeNonAuthoritativeInfo",
+                "CodeNoContent",
+                "CodeBadRequest",
+                "CodeUnauthorized",
+                "CodePaymentRequired",
+                "CodeForbidden",
+                "CodeNotFound",
+                "CodeMethodNotAllowed",
+                "CodeNotAcceptable",
+                "CodeProxyAuthRequired",
+                "CodeRequestTimeout",
+                "CodeConflict",
+                "CodeUnKnown"
+            ]
+        },
+        "v0.Foo": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "account email"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "account name"
+                }
+            }
+        }
+    }
+}
