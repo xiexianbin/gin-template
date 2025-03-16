@@ -21,8 +21,10 @@ import (
 	"reflect"
 	"strconv"
 	"time"
+	"unsafe"
 )
 
+// StringAny convert any to string
 func StringAny(x any) string {
 	// 处理所有类型的 nil 值
 	if x == nil {
@@ -171,4 +173,16 @@ func formatStruct(v reflect.Value) string {
 	}
 	buf.WriteString("}")
 	return buf.String()
+}
+
+// StringToBytes convert string to []byte
+// https://github.com/golang/go/issues/53003#issuecomment-1140276077
+func StringToBytes(s string) []byte {
+	return unsafe.Slice(unsafe.StringData(s), len(s))
+}
+
+// BytesToString convert []byte to string
+// https://github.com/golang/go/issues/53003#issuecomment-1140276077
+func BytesToString(b []byte) string {
+	return unsafe.String(&b[0], len(b))
 }

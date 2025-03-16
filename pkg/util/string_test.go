@@ -15,6 +15,7 @@
 package util
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -62,6 +63,54 @@ func TestStringAny(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if got := StringAny(tt.args.x); got != tt.want {
 				t.Errorf("StringAny() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestStringToBytes(t *testing.T) {
+	type args struct {
+		s string
+	}
+	tests := []struct {
+		name string
+		args args
+		want []byte
+	}{
+		{
+			name: "StringToBytes",
+			args: args{s: "abc"},
+			want: []byte{'a', 'b', 'c'},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := StringToBytes(tt.args.s); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("StringToBytes() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestBytesToString(t *testing.T) {
+	type args struct {
+		b []byte
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "StringToBytes",
+			args: args{b: []byte{'a', 'b', 'c'}},
+			want: "abc",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := BytesToString(tt.args.b); got != tt.want {
+				t.Errorf("BytesToString() = %v, want %v", got, tt.want)
 			}
 		})
 	}
