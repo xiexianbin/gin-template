@@ -20,9 +20,32 @@ import (
 	"fmt"
 	"reflect"
 	"strconv"
+	"strings"
 	"time"
+	"unicode/utf8"
 	"unsafe"
 )
+
+// RemoveNonASCII Removes all non-ASCII characters from a string
+func RemoveNonASCII(s string) string {
+	var result strings.Builder
+	for _, r := range s {
+		if r <= 127 {
+			result.WriteRune(r)
+		}
+	}
+	return result.String()
+}
+
+// RemoveNonUTF8 Removes all no-UTF-8 characters from a string
+func RemoveNonUTF8(s string) string {
+	return strings.Map(func(r rune) rune {
+		if r == utf8.RuneError {
+			return -1
+		}
+		return r
+	}, s)
+}
 
 // StringAny convert any to string
 func StringAny(x any) string {

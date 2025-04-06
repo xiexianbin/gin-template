@@ -115,3 +115,55 @@ func TestBytesToString(t *testing.T) {
 		})
 	}
 }
+
+func TestRemoveNonASCII(t *testing.T) {
+	type args struct {
+		s string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "test-1",
+			args: args{
+				s: "Hello, 世界! 123",
+			},
+			want: "Hello, ! 123",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := RemoveNonASCII(tt.args.s); got != tt.want {
+				t.Errorf("RemoveNonASCII() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestRemoveNonUTF8(t *testing.T) {
+	type args struct {
+		s string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "test-1",
+			args: args{
+				s: "Hello, 世界! \xff\xfe\xfd" + string([]byte{0x80}) + "正常文本",
+			},
+			want: "Hello, 世界! 正常文本",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := RemoveNonUTF8(tt.args.s); got != tt.want {
+				t.Errorf("RemoveNonUTF8() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
