@@ -22,6 +22,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"unicode"
 	"unicode/utf8"
 	"unsafe"
 )
@@ -45,6 +46,31 @@ func RemoveNonUTF8(s string) string {
 		}
 		return r
 	}, s)
+}
+
+// RemoveControlChars remove (unicode)control chars
+func RemoveControlChars(s string) string {
+	result := make([]rune, 0, len(s))
+	for _, r := range s {
+		if !unicode.IsControl(r) {
+			result = append(result, r)
+		}
+	}
+	return string(result)
+
+	// remove ascii control chars(0-31 and 127)
+	// re := regexp.MustCompile("[\x00-\x1F\x7F]")
+	// return re.ReplaceAllString(s, "")
+
+	// result := make([]byte, 0, len(s))
+	// for i := 0; i < len(s); i++ {
+	// 		b := s[i]
+	// 		if b > 31 && b != 127 {
+	// 				result = append(result, b)
+	// 		}
+	// }
+	// return string(result)
+
 }
 
 // StringAny convert any to string

@@ -167,3 +167,27 @@ func TestRemoveNonUTF8(t *testing.T) {
 		})
 	}
 }
+
+func TestRemoveControlChars(t *testing.T) {
+	type args struct {
+		s string
+	}
+	tests := []struct {
+		name string
+		args args
+		want string
+	}{
+		{
+			name: "test-1",
+			args: args{s: "Hello\tWorld\n\x00\x1F"},
+			want: "HelloWorld",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := RemoveControlChars(tt.args.s); got != tt.want {
+				t.Errorf("RemoveControlChars() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
