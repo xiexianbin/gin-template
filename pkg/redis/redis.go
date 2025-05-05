@@ -85,11 +85,11 @@ func InitRedisSentinel(redisSentinelDSN string) {
 	})
 }
 
-func InitRedisCluster(redisClusterNSN string) {
+func InitRedisCluster(redisClusterDSN string) {
 	// Redis Cluster
 	once.Do(func() {
-		if redisClusterNSN != "" {
-			opt, err := redis.ParseClusterURL(redisClusterNSN)
+		if redisClusterDSN != "" {
+			opt, err := redis.ParseClusterURL(redisClusterDSN)
 			util.Mustf(err, "parse Redis by REDIS_CLUTER_DSN failed")
 
 			opt.DialTimeout = 3 * time.Second // no time unit = seconds
@@ -106,6 +106,16 @@ func InitRedisCluster(redisClusterNSN string) {
 			return
 		}
 	})
+}
+
+func Init(redisDSN, redisSentinelDSN, redisClusterDSN string) {
+	if redisDSN != "" {
+		InitRedis(redisDSN)
+	} else if redisSentinelDSN != "" {
+		InitRedisSentinel(redisSentinelDSN)
+	} else if redisClusterDSN != "" {
+		InitRedisCluster(redisClusterDSN)
+	}
 }
 
 // Pool return redis.ClusterClient or redis.Client
